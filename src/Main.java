@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        CustomCommandPrompt prompt = new CustomCommandPrompt();
+        View prompt = new View();
         // ... (you can interact with the prompt object here)
     }
 
