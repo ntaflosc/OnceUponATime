@@ -2,19 +2,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;  // Added import for BufferedReader
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 public class CustomCommandPrompt extends JFrame {
 
     private JTextArea console;
     private JTextField inputField;
     private int currentRow;
     private int currentCol;
-    private final int mapRows = 3;
-    private final int mapCols = 3;
+    private final int mapRows = 3;  // Replace with your actual map dimensions
+    private final int mapCols = 3;  // Replace with your actual map dimensions
     private MapWindow mapInstance = null;
     private HealthBar healthBar = new HealthBar(100); // Replace 100 with your max health
+
+    private List<String> executedCommands = new ArrayList<>(); // Stores user-entered commands
 
     public CustomCommandPrompt() {
         super("Custom Command Prompt");
@@ -37,13 +45,18 @@ public class CustomCommandPrompt extends JFrame {
                 String userInput = inputField.getText().trim().toLowerCase();
                 inputField.setText("");
 
-                if (commands.containsKey(userInput)) {
-                    console.append( "----" + userInput + "----\n");
-                    commands.get(userInput).run();
-                    updateMapDisplay();
-                    updateHealthBar();  // Ensure updateHealthBar is called after setting health
+                if (userInput.equals("save")) {
+                    saveCommands(); // Call save method for "save" command
                 } else {
-                    console.append("> Error: Unknown command '" + userInput + "'\n");
+                    executedCommands.add(userInput); // Store command before execution
+                    if (commands.containsKey(userInput)) {
+                        console.append("----" + userInput + "----\n");
+                        commands.get(userInput).run();
+                        updateMapDisplay();
+                        updateHealthBar();
+                    } else {
+                        console.append("> Error: Unknown command '" + userInput + "'\n");
+                    }
                 }
             }
         });
@@ -58,15 +71,17 @@ public class CustomCommandPrompt extends JFrame {
         setVisible(true);
     }
 
+    // Movement handling methods
     private void handleMovement(int colChange, int rowChange) {
         int newRow = currentRow + rowChange;
         int newCol = currentCol + colChange;
 
         if (isValidMove(newRow, newCol)) {
             currentRow = newRow;
-
             currentCol = newCol;
-            console.append("You move " + getDirection(colChange, rowChange) + ".\n");
+            String direction = getDirection(colChange, rowChange);
+            console.append("You move " + direction.toLowerCase() + ".\n");
+            // Update map or perform actions based on the new location (optional)
         } else {
             console.append("You cannot move there. It's beyond the map boundaries.\n");
         }
@@ -82,7 +97,19 @@ public class CustomCommandPrompt extends JFrame {
         } else if (rowChange == 0) {
             return colChange == 1 ? "east" : "west";
         } else {
-            return (colChange > 0 ? "east" : "west") + (rowChange > 0 ? "south" : "north");
+            // Separate checks for diagonal movements with priority to vertical movement
+            String direction = "";
+            if (rowChange < 0) {
+                direction += "north";
+            } else {
+                direction += "south";
+            }
+            if (colChange > 0) {
+                direction += "east";
+            } else {
+                direction += "west";
+            }
+            return direction;
         }
     }
 
@@ -93,19 +120,47 @@ public class CustomCommandPrompt extends JFrame {
     }
 
     private void updateHealthBar() {
-        // Print debugging information to check health and color updates (optional)
-        // System.out.println("Current Health: " + healthBar.getCurrentHealth() + "/" + healthBar.getMAX_HEALTH());
 
+    }
 
+    private void saveCommands() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt", false))) {
+            writer.write("");  // Clear the file
+            for (String command : executedCommands) {
+                writer.write(command + "\n");
+            }
+            console.append("Commands saved successfully!\n");
+            executedCommands.clear(); // Clear list after saving
+        } catch (IOException e) {
+            console.append("Error saving commands: " + e.getMessage() + "\n");
+        }
+    }
 
-        // Ensure updateHealthBar is called to reflect health percentage on the panel
-        healthBar.updateHealthBar();
+    private void loadCommands() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("save.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line = line.trim().toLowerCase();
+                if (!line.isEmpty()) {
+                    console.append("---- Executing: " + line + " ----\n");
+                    if (commands.containsKey(line)) {
+                        commands.get(line).run();
+                        updateMapDisplay();
+                        updateHealthBar();
+                    } else {
+                        console.append("> Error: Unknown command '" + line + "'\n");
+                    }
+                }
+            }
+            console.append("Commands loaded and executed successfully!\n");
+        } catch (IOException e) {
+            console.append("Error loading commands: " + e.getMessage() + "\n");
+        }
     }
 
     private Map<String, Runnable> commands = new HashMap<>();
 
     {
-        // Movement commands (lowercase for case-insensitive matching)
         commands.put("go north", () -> handleMovement(0, -1));
         commands.put("go east", () -> handleMovement(1, 0));
         commands.put("go south", () -> handleMovement(0, 1));
@@ -114,11 +169,10 @@ public class CustomCommandPrompt extends JFrame {
         commands.put("go northwest", () -> handleMovement(-1, -1));
         commands.put("go southeast", () -> handleMovement(1, 1));
         commands.put("go southwest", () -> handleMovement(-1, 1));
-        // Doesn't detect the location, just changes the col and row, we can make it check the location in map window
         // Interaction commands (replace with your actual logic)
         commands.put("obtain item", () -> console.append("You try to obtain an item. But nothing is there. \n"));
         commands.put("talk to character", () -> console.append("There seems to be no character to talk to here.\n"));
-
+        commands.put("load", this::loadCommands);
         //healthbar related commands (for testing) currently trying to add/remove health value from the hp bar
         commands.put("damage", () -> console.append("You took some damage.\n"));
         // Map related commands
@@ -135,4 +189,5 @@ public class CustomCommandPrompt extends JFrame {
             healthBar.setVisible(true);  // Make the health bar window visible
         });
     }
-    }
+}
+
