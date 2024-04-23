@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 public class CustomCommandPrompt extends JFrame {
 
     private JTextArea console;
@@ -118,9 +119,15 @@ public class CustomCommandPrompt extends JFrame {
             mapInstance.updateMap(currentRow, currentCol);
         }
     }
-
     private void updateHealthBar() {
+        healthBar.setVisible(true);  // Make the health bar window visible
+    }
 
+// ... (rest of the code)
+
+    private int getHealth() {
+        // No health reduction logic here anymore
+        return healthBar.getCurrentHealth();
     }
 
     private void saveCommands() {
@@ -173,8 +180,11 @@ public class CustomCommandPrompt extends JFrame {
         commands.put("obtain item", () -> console.append("You try to obtain an item. But nothing is there. \n"));
         commands.put("talk to character", () -> console.append("There seems to be no character to talk to here.\n"));
         commands.put("load", this::loadCommands);
-        //healthbar related commands (for testing) currently trying to add/remove health value from the hp bar
-        commands.put("damage", () -> console.append("You took some damage.\n"));
+        // Healthbar related commands
+        commands.put("damage", () -> {
+            healthBar.setCurrentHealth(Math.max(0, healthBar.getCurrentHealth() - 10));
+            console.append("You took some damage.\n");
+        });
         // Map related commands
         commands.put("show map", () -> {
             if (mapInstance == null) {
@@ -190,4 +200,5 @@ public class CustomCommandPrompt extends JFrame {
         });
     }
 }
+
 

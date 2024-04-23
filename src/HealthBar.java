@@ -1,11 +1,13 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class HealthBar extends JFrame {
 
     private final int MAX_HEALTH;
     private int currentHealth;
-    private JLabel healthLabel;  // Use JLabel directly for displaying percentage
+    private JLabel healthLabel;  // Declare healthLabel as a class variable
 
     public HealthBar(int maxHealth) {
         super();
@@ -15,15 +17,17 @@ public class HealthBar extends JFrame {
         this.currentHealth = maxHealth;
 
         // Set preferred size as minimum size to prevent resizing
-        setPreferredSize(new Dimension(100, 30));  // Adjust size as needed
+        setPreferredSize(new Dimension(200, 90));  // Adjust size as needed
         setMinimumSize(getPreferredSize());
         pack();
 
         healthLabel = new JLabel();  // Create empty JLabel
         healthLabel.setFont(new Font("Arial", Font.BOLD, 14));  // Set font (adjust as needed)
         getContentPane().add(healthLabel);  // Add directly to content pane
-    }
 
+        // Call updateHealthBar to display initial value
+        updateHealthBar();
+    }
 
     public void setCurrentHealth(int newHealth) {
         this.currentHealth = Math.max(0, Math.min(newHealth, MAX_HEALTH));
@@ -40,6 +44,6 @@ public class HealthBar extends JFrame {
 
     public void updateHealthBar() {
         float healthPercentage = (float) currentHealth / MAX_HEALTH;
-        healthLabel.setText(String.format("%.0f%%", healthPercentage * 100));
+        healthLabel.setText(String.format("%d/%d", currentHealth, MAX_HEALTH));
     }
 }
