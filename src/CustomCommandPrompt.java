@@ -120,10 +120,8 @@ public class CustomCommandPrompt extends JFrame {
         }
     }
     private void updateHealthBar() {
-        healthBar.setVisible(true);  // Make the health bar window visible
     }
-
-// ... (rest of the code)
+// for some reason it breaks when i add updatehealthbar, if i remove it it works perfectly so cool
 
     private int getHealth() {
         // No health reduction logic here anymore
@@ -131,10 +129,11 @@ public class CustomCommandPrompt extends JFrame {
     }
 
     private void saveCommands() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt", false))) {
-            writer.write("");  // Clear the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt", true))) {
             for (String command : executedCommands) {
-                writer.write(command + "\n");
+                if (!command.startsWith("load")) { // Ignore "load" commands
+                    writer.write(command + "\n");
+                }
             }
             console.append("Commands saved successfully!\n");
             executedCommands.clear(); // Clear list after saving
@@ -142,6 +141,7 @@ public class CustomCommandPrompt extends JFrame {
             console.append("Error saving commands: " + e.getMessage() + "\n");
         }
     }
+
 
     private void loadCommands() {
         try (BufferedReader reader = new BufferedReader(new FileReader("save.txt"))) {
@@ -184,20 +184,34 @@ public class CustomCommandPrompt extends JFrame {
         commands.put("damage", () -> {
             healthBar.setCurrentHealth(Math.max(0, healthBar.getCurrentHealth() - 10));
             console.append("You took some damage.\n");
+
         });
-        // Map related commands
-        commands.put("show map", () -> {
-            if (mapInstance == null) {
-                mapInstance = new MapWindow(mapRows, mapCols);  // Create new MapWindow if not already open
-            } else {
-                mapInstance.setVisible(true);  // Make existing MapWindow visible if hidden
+
+        commands.put("delete save", () -> {
+            try {
+                // Clear the existing file content
+                new FileWriter("save.txt").close(); // Creates an empty file
+                console.append("Save file deleted successfully.\n");
+            } catch (IOException e) {
+                console.append("Error deleting save file: " + e.getMessage() + "\n");
             }
         });
 
-        // Show health command
-        commands.put("show health", () -> {
-            healthBar.setVisible(true);  // Make the health bar window visible
+        commands.put("show map", () -> {
+            if (mapInstance != null) {
+                mapInstance.setVisible(true);
+            } else {
+                mapInstance = new MapWindow(mapRows, mapCols);
+            }
         });
+
+
+        commands.put("show health", () -> {
+            healthBar.setVisible(true);
+        });
+
+
+
     }
 }
 
