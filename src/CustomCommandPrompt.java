@@ -210,7 +210,20 @@ public class CustomCommandPrompt extends JFrame {
             healthBar.setVisible(true);
         });
 
-
+        commands.put("heal", () -> {
+            if (Math.random() < 0.05) { // 5% chance of critical failure
+                healthBar.setCurrentHealth(Math.max(0, healthBar.getCurrentHealth() - 10));
+                console.append("Critical failure! You accidentally hurt yourself, losing 10 health points. (Current Health: " + healthBar.getCurrentHealth() + ")\n");
+            } else if (Math.random() < 0.15) { // 10% chance of critical success (0.05 + 0.1 = 0.15)
+                int newHealth = Math.min(healthBar.getCurrentHealth() + 20, healthBar.getMAX_HEALTH());
+                healthBar.setCurrentHealth(newHealth);
+                console.append("Critical heal! You recover 20 health points. (Current Health: " + newHealth + ")\n");
+            } else {
+                int newHealth = Math.min(healthBar.getCurrentHealth() + 10, healthBar.getMAX_HEALTH());
+                healthBar.setCurrentHealth(newHealth);
+                console.append("You healed 10 health points. (Current Health: " + newHealth + ")\n");
+            }
+        });
 
     }
 }
