@@ -7,4 +7,4 @@ public class Main {
 
 }
 
-//lmao the only thing we have on main is interactable command prompt
+//lmao the only thing we have on main is interactable command promptx

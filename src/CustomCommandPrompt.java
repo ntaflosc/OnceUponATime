@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;  // Added import for BufferedReader
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.text.DefaultCaret;
 
 public class CustomCommandPrompt extends JFrame {
 
@@ -39,6 +40,12 @@ public class CustomCommandPrompt extends JFrame {
         console.setEditable(false);
         console.setLineWrap(true);
 
+        // Ensure caret always scrolls to the end
+        DefaultCaret caret = (DefaultCaret)console.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+        // Initial preferred size (adjust as needed)
+        console.setPreferredSize(new Dimension(300, 200));
         inputField = new JTextField();
         inputField.addActionListener(new ActionListener() {
             @Override
@@ -55,6 +62,7 @@ public class CustomCommandPrompt extends JFrame {
                         commands.get(userInput).run();
                         updateMapDisplay();
                         updateHealthBar();
+                        updateConsoleSize(); // Call after appending text
                     } else {
                         console.append("> Error: Unknown command '" + userInput + "'\n");
                     }
@@ -64,12 +72,21 @@ public class CustomCommandPrompt extends JFrame {
     }
 
     private void createLayout() {
-        getContentPane().add(console, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(console);
+        getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(inputField, BorderLayout.SOUTH);
 
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private void updateConsoleSize() {
+        int lines = console.getLineCount();
+        int estimatedLineHeight = 16; // Adjust based on your font size
+        int newHeight = lines * estimatedLineHeight;
+        console.setPreferredSize(new Dimension(console.getPreferredSize().width, newHeight));
+        console.revalidate(); // Inform the component hierarchy about the change
     }
 
     // Movement handling methods
@@ -131,7 +148,7 @@ public class CustomCommandPrompt extends JFrame {
     private void saveCommands() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt", true))) {
             for (String command : executedCommands) {
-                if (!command.startsWith("load")) { // Ignore "load" commands
+                if (!command.equals("load")) { // Remove "load" after saving
                     writer.write(command + "\n");
                 }
             }
@@ -184,9 +201,8 @@ public class CustomCommandPrompt extends JFrame {
         commands.put("damage", () -> {
             healthBar.setCurrentHealth(Math.max(0, healthBar.getCurrentHealth() - 10));
             console.append("You took some damage.\n");
-
         });
-
+        commands.put("help", () -> new HelpWindow(commands.keySet().toArray(new String[0])));
         commands.put("delete save", () -> {
             try {
                 // Clear the existing file content
@@ -209,7 +225,7 @@ public class CustomCommandPrompt extends JFrame {
         commands.put("show health", () -> {
             healthBar.setVisible(true);
         });
-
+//new class with healthbar in view
         commands.put("heal", () -> {
             if (Math.random() < 0.05) { // 5% chance of critical failure
                 healthBar.setCurrentHealth(Math.max(0, healthBar.getCurrentHealth() - 10));

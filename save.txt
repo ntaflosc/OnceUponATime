@@ -1,0 +1,21 @@
+go west
+go east
+go east
+go north
+go north
+heal
+heal
+heal
+heal
+heal
+heal
+damage
+damage
+heal
+heal
+heal
+damage
+damage
+damage
+heal
+heal
