@@ -1,25 +1,24 @@
 package model;
 
-import java.util.List;
-
 public class Dialogue {
     private String character;
-    private List<String> texts;
+    private String text;
 
-    // Getters and Setters
+    // Getters
     public String getCharacter() {
         return character;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    // Setters
     public void setCharacter(String character) {
         this.character = character;
     }
 
-    public List<String> getTexts() {
-        return texts;
-    }
-
-    public void setTexts(List<String> texts) {
-        this.texts = texts;
+    public void setText(String text) {
+        this.text = text;
     }
 }

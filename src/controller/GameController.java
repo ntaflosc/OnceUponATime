@@ -1,43 +1,40 @@
 package controller;
 
-import model.*;
 import loader.XMLLoader;
+import model.Scenario;
+import view.GameView;
+
 import java.util.List;
+import java.util.Scanner;
 
 public class GameController {
     private List<Scenario> scenarios;
+    private GameView view;
+    private Scanner scanner;
 
-    public GameController(String xmlFilePath) {
-        XMLLoader loader = new XMLLoader(xmlFilePath);
-        this.scenarios = loader.loadScenarios();
+    public GameController(String filePath) {
+        XMLLoader loader = new XMLLoader(filePath);
+        scenarios = loader.getScenarios();
+        view = new GameView();
+        scanner = new Scanner(System.in);
     }
 
     public void startGame() {
-        if (scenarios != null && !scenarios.isEmpty()) {
-            Scenario scenario = scenarios.get(0);
-            System.out.println(scenario.getStory());
-            processChoices(scenario.getChoices());
+        if (scenarios.isEmpty()) {
+            System.out.println("No scenarios available.");
+            return;
         }
-    }
 
-    private void processChoices(List<Choice> choices) {
-        for (Choice choice : choices) {
-            System.out.println("Choice ID: " + choice.getId());
-            System.out.println("Action: " + choice.getAction());
-            for (Dialogue dialogue : choice.getDialogues()) {
-                System.out.println("Character: " + dialogue.getCharacter());
-                for (String text : dialogue.getTexts()) {
-                    System.out.println("Text: " + text);
-                }
-            }
-            for (Effect effect : choice.getEffects()) {
-                System.out.println("Items: " + effect.getItems());
-                System.out.println("Reputation: " + effect.getReputation());
-                System.out.println("Checkpoint: " + effect.getCheckpoint());
-            }
-            if (choice.getSubChoices() != null) {
-                processChoices(choice.getSubChoices());
-            }
+        for (Scenario scenario : scenarios) {
+            view.displayScenario(scenario);
+            view.displayChoices(scenario.getChoices());
+
+            System.out.println("Enter your choice ID:");
+            String choiceId = scanner.nextLine();
+            // You need to handle player choice input here
+
+            // For the demo, we just show the choices without interaction handling
+            // Add your interaction logic here
         }
     }
 }

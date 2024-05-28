@@ -1,43 +1,48 @@
 package view;
 
-import model.*;
+import model.Choice;
+import model.Dialogue;
+import model.Scenario;
+
 import java.util.List;
 
 public class GameView {
     public void displayScenario(Scenario scenario) {
+        System.out.println("Location: " + scenario.getLocation());
         System.out.println("Story: " + scenario.getStory());
-        displayChoices(scenario.getChoices());
+
+        List<Dialogue> dialogues = scenario.getDialogues();
+        if (dialogues != null) {
+            for (Dialogue dialogue : dialogues) {
+                System.out.println("Character: " + dialogue.getCharacter());
+                System.out.println("Text: " + dialogue.getText());
+            }
+        }
     }
 
     public void displayChoices(List<Choice> choices) {
         for (Choice choice : choices) {
             System.out.println("Choice ID: " + choice.getId());
             System.out.println("Action: " + choice.getAction());
-            displayDialogues(choice.getDialogues());
-            displayEffects(choice.getEffects());
+            if (choice.getDialogues() != null) {
+                for (Dialogue dialogue : choice.getDialogues()) {
+                    System.out.println("Character: " + dialogue.getCharacter());
+                    System.out.println("Text: " + dialogue.getText());
+                }
+            }
+            if (choice.getEffects() != null) {
+                choice.getEffects().forEach(effect -> {
+                    if (effect.getItems() != null) {
+                        System.out.println("Items: " + effect.getItems());
+                    }
+                    if (effect.getReputation() != null) {
+                        System.out.println("Reputation: " + effect.getReputation());
+                    }
+                    System.out.println("Checkpoint: " + effect.getCheckpoint());
+                });
+            }
             if (choice.getSubChoices() != null) {
                 displayChoices(choice.getSubChoices());
-            }
-        }
-    }
-
-    public void displayDialogues(List<Dialogue> dialogues) {
-        for (Dialogue dialogue : dialogues) {
-            System.out.println("Character: " + dialogue.getCharacter());
-            for (String text : dialogue.getTexts()) {
-                System.out.println("Text: " + text);
-            }
-        }
-    }
-
-    public void displayEffects(List<Effect> effects) {
-        for (Effect effect : effects) {
-            System.out.println("Items: " + effect.getItems());
-            System.out.println("Reputation: " + effect.getReputation());
-            System.out.println("Checkpoint: " + effect.getCheckpoint());
-            // Check if health is a valid attribute and display it
-            if (effect.getHealth() != 0) {
-                System.out.println("Health: " + effect.getHealth());
             }
         }
     }
