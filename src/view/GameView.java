@@ -8,8 +8,13 @@ import java.util.List;
 
 public class GameView {
     public void displayScenario(Scenario scenario) {
+        //Placeholder for xml player name
+        String username = "John Doe";
+        String messageTemplate = scenario.getStory();
+        String message = messageTemplate.replace("{username}", username);
+
         System.out.println("Location: " + scenario.getLocation());
-        System.out.println("Story: " + scenario.getStory());
+        System.out.println("Story: " + message);
 
         List<Dialogue> dialogues = scenario.getDialogues();
         if (dialogues != null) {
@@ -21,6 +26,7 @@ public class GameView {
     }
 
     public void displayChoices(List<Choice> choices) {
+
         for (Choice choice : choices) {
             System.out.println("Choice ID: " + choice.getId());
             System.out.println("Action: " + choice.getAction());

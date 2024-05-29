@@ -27,3 +27,11 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/src/view/GameView.class
+/src/model/Scenario.class
+/src/model/Effect.class
+/src/model/Dialogue.class
+/src/model/Choice.class
+/src/loader/XMLLoader.class
+/src/Main.class
+/src/controller/GameController.class

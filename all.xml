@@ -1,10 +1,11 @@
+<game>
 <scenario>
     <inventory>
         <coins>5</coins>
     </inventory>
 
     <story>
-        Welcome home [onoma paixti], it has been a long time since you left and a lot of things have changed. Let’s have a look around.
+        Welcome home {username}, it has been a long time since you left and a lot of things have changed. Let’s have a look around.
     </story>
 
     <choices>
@@ -828,3 +829,4 @@
         </choice>
     </choices>
 </scenario>
+</game>
