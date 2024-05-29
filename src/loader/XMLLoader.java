@@ -9,9 +9,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,13 @@ public class XMLLoader {
                     for (int j = 0; j < choiceNodes.getLength(); j++) {
                         Element choiceElement = (Element) choiceNodes.item(j);
                         Choice choice = new Choice(choiceElement.getAttribute("id"));
-                        choice.setCheckpoint(Integer.parseInt(choiceElement.getAttribute("checkpoint")));
+
+                        // Check for empty attribute before parsing
+                        if (choiceElement.getAttribute("checkpoint").isEmpty()) {
+                            choice.setCheckpoint(0); // Set a default value (adjust as needed)
+                        } else {
+                            choice.setCheckpoint(Integer.parseInt(choiceElement.getAttribute("checkpoint")));
+                        }
 
                         NodeList choiceDialogueNodes = choiceElement.getElementsByTagName("dialogue");
                         for (int k = 0; k < choiceDialogueNodes.getLength(); k++) {
@@ -72,6 +77,6 @@ public class XMLLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return scenarios;
     }
 }

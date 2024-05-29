@@ -10,7 +10,7 @@ public class Main {
 
         // Load scenarios from XML (or another source)
         XMLLoader xmlLoader = new XMLLoader();
-        List<Scenario> scenarios = xmlLoader.loadScenarios("test2.xml"); // Update the path as needed
+        List<Scenario> scenarios = xmlLoader.loadScenarios("test.xml"); // Update the path as needed
 
         // Create the GameView instance
         GameView view = new GameView();
