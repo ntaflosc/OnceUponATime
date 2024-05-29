@@ -1,0 +1,103 @@
+<game>
+    <scenario>
+        <story>Welcome to the adventure! You are in a dark forest. What will you do?</story>
+        <choices>
+            <choice id="1">
+                <action>Look around</action>
+                <dialogues>
+                    <dialogue>
+                        <character>Player</character>
+                        <text>It's too dark to see anything clearly.</text>
+                    </dialogue>
+                    <dialogue>
+                        <character>Player</character>
+                        <text>But I can make out a faint light in the distance.</text>
+                    </dialogue>
+                </dialogues>
+                <subchoices>
+                    <choice id="1.1">
+                        <action>Approach the light</action>
+                        <dialogues>
+                            <dialogue>
+                                <character>Player</character>
+                                <text>As you move towards the light, it becomes brighter.</text>
+                            </dialogue>
+                            <dialogue>
+                                <character>Old Man</character>
+                                <text>Hello, traveler. What brings you here?</text>
+                            </dialogue>
+                        </dialogues>
+                        <effect>
+                            <item>Lamp</item>
+                            <rep>5.0</rep>
+                            <checkpoint>1</checkpoint>
+                        </effect>
+                    </choice>
+                    <choice id="1.2">
+                        <action>Stay put</action>
+                        <dialogues>
+                            <dialogue>
+                                <character>Player</character>
+                                <text>It's too risky to move without knowing more.</text>
+                            </dialogue>
+                        </dialogues>
+                        <effect>
+                            <rep>-1.0</rep>
+                            <checkpoint>0</checkpoint>
+                        </effect>
+                    </choice>
+                </subchoices>
+            </choice>
+            <choice id="2">
+                <action>Shout for help</action>
+                <dialogues>
+                    <dialogue>
+                        <character>Player</character>
+                        <text>Is anyone out there? I need help!</text>
+                    </dialogue>
+                    <dialogue>
+                        <character>Unknown Voice</character>
+                        <text>Stay where you are. Help is coming.</text>
+                    </dialogue>
+                </dialogues>
+                <subchoices>
+                    <choice id="2.1">
+                        <action>Wait</action>
+                        <dialogues>
+                            <dialogue>
+                                <character>Player</character>
+                                <text>Minutes pass, but no one comes.</text>
+                            </dialogue>
+                            <dialogue>
+                                <character>Player</character>
+                                <text>I need to do something, I can't just wait here.</text>
+                            </dialogue>
+                        </dialogues>
+                        <effect>
+                            <rep>-2.0</rep>
+                            <checkpoint>0</checkpoint>
+                        </effect>
+                    </choice>
+                    <choice id="2.2">
+                        <action>Move towards the voice</action>
+                        <dialogues>
+                            <dialogue>
+                                <character>Player</character>
+                                <text>As you move, the voice gets louder.</text>
+                            </dialogue>
+                            <dialogue>
+                                <character>Guide</character>
+                                <text>Follow me, I will lead you to safety.</text>
+                            </dialogue>
+                        </dialogues>
+                        <effect>
+                            <item>Map</item>
+                            <rep>3.0</rep>
+                            <checkpoint>1</checkpoint>
+                        </effect>
+                    </choice>
+                </subchoices>
+            </choice>
+        </choices>
+    </scenario>
+</game>

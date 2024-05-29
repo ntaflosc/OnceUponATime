@@ -1,0 +1,832 @@
+<game>
+<scenario>
+    <inventory>
+        <coins>5</coins>
+    </inventory>
+
+    <story>
+        Welcome home {username}, it has been a long time since you left and a lot of things have changed. Let’s have a look around.
+    </story>
+
+    <choices>
+        <choice id="1">
+            <action>go to the seafront</action>
+            <dialogue>
+                <character>Fisherman</character>
+                <text>Hi stranger, the weather is beautiful, isn’t it?</text>
+                <text>I’m struggling with fishing. Are you willing to help me?</text>
+            </dialogue>
+            <subchoice>
+                <choice id="1.1">
+                    <action>help him</action>
+                    <dialogue>
+                        <character>Fisherman</character>
+                        <text>Thank you, young man. Take this for your efforts.</text>
+                    </dialogue>
+                    <effect>
+                        <items>
+                            <item>-fish (+health)</item>
+                            <item>-coin (+1)</item>
+                        </items>
+                        <rep>-0.5</rep>
+                        <checkpoint>1</checkpoint>
+                    </effect>
+                </choice>
+                <choice id="1.2">
+                    <action>throw him in the sea</action>
+                    <dialogue>
+                        <character>Fisherman</character>
+                        <text>Screw you, I will tell everybody about you.</text>
+                    </dialogue>
+                    <effect>
+                        <rep>-0.5</rep>
+                    </effect>
+                </choice>
+                <choice id="1.3">
+                    <action>ignore him</action>
+                    <effect>
+                        <rep>0</rep>
+                    </effect>
+                </choice>
+            </subchoice>
+        </choice>
+
+        <choice id="2">
+            <action>go to the pub</action>
+            <dialogue>
+                <character>Waiter</character>
+                <text>Welcome to the “Fat Pig”. We don’t have any tables to sit you, but you can sit at the bar.</text>
+                <character>Barman</character>
+                <text>What can I get you, stranger?</text>
+            </dialogue>
+            <subchoice>
+                <choice id="2.1">
+                    <action>water</action>
+                </choice>
+                <choice id="2.2">
+                    <action>lemonade</action>
+                </choice>
+                <choice id="2.3">
+                    <action>rum</action>
+                </choice>
+            </subchoice>
+            <dialogue>
+                <character>Barman</character>
+                <text>So, what are you doing here? Don’t you know there is a war about to happen?</text>
+                <character>Player</character>
+                <text>I know. I am King Arthur and I am coming back from a job to help.</text>
+                <character>Barman</character>
+                <text>Oh, it’s a pleasure to meet you. King Arthur has helped me a lot with protection for my pub. Take this as a gift and send my best regards to the king.</text>
+                <character>Player</character>
+                <text>Thanks a lot.</text>
+            </dialogue>
+            <effect>
+                <item>-sword</item>
+                <checkpoint>2</checkpoint>
+            </effect>
+        </choice>
+
+        <choice id="3">
+            <action>explore the town</action>
+            <dialogue>
+                <character>Woman</character>
+                <text>HELP! HELP! Someone stole my bag.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="3.1">
+                    <action>chase the thief</action>
+                    <dialogue>
+                        <character>Player</character>
+                        <text>Give me the bag, you scum!</text>
+                        <character>Robber</character>
+                        <text>You don’t want to fight me, little man. It’s not going to end well for you.</text>
+                        <character>Player</character>
+                        <text>I am coming to get you!</text>
+                    </dialogue>
+                    <effect>
+                        <health>-10</health>
+                        <rep>0.5</rep>
+                        <checkpoint>3</checkpoint>
+                    </effect>
+                </choice>
+                <choice id="3.2">
+                    <action>ignore her</action>
+                    <dialogue>
+                        <character>Robber</character>
+                        <text>Give me your money!!</text>
+                        <character>Player</character>
+                        <text>Never!!!</text>
+                        <character>Robber</character>
+                        <text>Ok then, take this!</text>
+                    </dialogue>
+                    <effect>
+                        <health>-10</health>
+                    </effect>
+                </choice>
+            </subchoice>
+        </choice>
+
+        <choice id="4">
+            <action>shop</action>
+            <dialogue>
+                <character>Employee</character>
+                <text>Welcome to my shop. We have a lot of products for you to choose from.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="4.1">
+                    <action>sword</action>
+                </choice>
+                <choice id="4.2">
+                    <action>shield</action>
+                </choice>
+                <choice id="4.3">
+                    <action>bow + arrows</action>
+                </choice>
+                <choice id="4.4">
+                    <action>shiv</action>
+                </choice>
+                <choice id="4.5">
+                    <action>damage potion</action>
+                </choice>
+                <choice id="4.6">
+                    <action>health potion</action>
+                </choice>
+                <choice id="4.7">
+                    <action>buy nothing</action>
+                </choice>
+            </subchoice>
+            <dialogue>
+                <character>Employee</character>
+                <text>Thanks for choosing us to shop.</text>
+            </dialogue>
+            <checkpoint>4</checkpoint>
+        </choice>
+
+        <choice id="5">
+            <action>leave town</action>
+            <directions>
+                <direction>EAST sea</direction>
+                <direction>NORTHEAST Arthur’s castle</direction>
+                <direction>NORTH Forrest</direction>
+            </directions>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+    <location>sea</location>
+    <state>dead end</state>
+    
+    <story>
+        You were captivated by the sea view. But be careful if you step forward you may be injured.
+    </story>
+    
+    <choices>
+        <choice id="1">
+            <action>step forward</action>
+            <result>
+                You got impaled by an arrow from an enemy battleship.
+                <effect>
+                    <health>-20</health>
+                </effect>
+            </result>
+        </choice>
+        
+        <choice id="2">
+            <action>go for a swim</action>
+            <result>
+                You jumped into the sea and you were welcomed by a hungry shark.
+                <effect>
+                    <health>-20</health>
+                </effect>
+            </result>
+        </choice>
+        
+        <choice id="3">
+            <action>leave the seafront</action>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+ <story>
+        You are approaching your hometown once again. Lots of things have changed since the last time you were here.
+    </story>
+    
+    <choices>
+        <choice id="1">
+            <action>go to Arthur’s castle</action>
+            <dialogue>
+                <character>Guard</character>
+                <text>Welcome stranger to the castle of his majesty, king Arthur why are you here?</text>
+                <character>Player</character>
+                <text>I need to talk to the king, he summoned me to help with the war. I am his messenger.</text>
+                <character>Guard</character>
+                <text>Oh lord I didn’t recognize you. Come in, the king is waiting for you!</text>
+            </dialogue>
+            <subchoice>
+                <choice id="1.1">
+                    <action>go to the king</action>
+                    <dialogue>
+                        <character>King</character>
+                        <text>Dear ……… I need your assistance urgently. Our only hope lies in securing an alliance with King Eduard's kingdom. Failure to do so will result in the enemy conquering us. You must now proceed to King Eduard's kingdom at the earliest opportunity.</text>
+                        <character>Player</character>
+                        <text>Yes my lord, I will do my best. Which is the best way to go to King Eduard?</text>
+                        <character>King</character>
+                        <text>You need to find first Pythia who lives in the mountains above the druids' forest. She will judge our fate and will give you her prophecy, but be careful, it’s a riddle.</text>
+                        <character>Player</character>
+                        <text>Thank you my lord for sharing this information with me. I won’t disappoint you.</text>
+                    </dialogue>
+                    <checkpoint>5</checkpoint>
+                </choice>
+                
+                <choice id="1.2">
+                    <action>go to the vault</action>
+                    <result>
+                        You found a treasure chest.
+                        <subchoice>
+                            <choice id="1.2.1">
+                                <action>open it</action>
+                                <effect>
+                                    <item>chest plate</item>
+                                    <attribute>+8</attribute>
+                                    <reputation>-0.8</reputation>
+                                </effect>
+                            </choice>
+                            <choice id="1.2.2">
+                                <action>ignore it</action>
+                            </choice>
+                        </subchoice>
+                    </result>
+                </choice>
+                
+                <choice id="1.3">
+                    <action>explore the abandoned dungeon</action>
+                    <result>
+                        Chilling atmosphere envelops you. The air is heavy with dust, and the only light comes from faint beams that filter through cracks in the ceiling and small openings in the walls. Rusty shackles hang ominously from the walls, while decrepit torture devices sit in the corners, silent witnesses to the suffering that once occurred here.
+                        <subchoice>
+                            <choice id="1.3.1">
+                                <action>go deeper</action>
+                                <result>
+                                    As you venture deeper into the dungeon, the air grows colder, and the darkness becomes more oppressive. Strange sounds fill the air: the scurrying of unseen creatures, the creaking of old timbers, and the occasional distant moan of the wind. And suddenly, an old skeleton becomes alive and attacks you.
+                                </result>
+                            </choice>
+                            <choice id="1.3.2">
+                                <action>leave</action>
+                            </choice>
+                        </subchoice>
+                    </result>
+                </choice>
+                
+                <choice id="1.4">
+                    <action>talk to Arthur’s mother</action>
+                    <dialogue>
+                        <character>Arthur’s mother</character>
+                        <text>Hi ……... I need your assistance. Since the recent passing of my lovely husband, rumors have spread that I might have poisoned him. So I need you to bring me some flowers for his grave.</text>
+                    </dialogue>
+                    <subchoice>
+                        <choice id="1.4.1">
+                            <action>give flowers</action>
+                            <effect>
+                                <character>Arthur’s mother</character>
+                                <text>Thanks for helping me.</text>
+                                <reward>
+                                    <coins>10</coins>
+                                </reward>
+                            </effect>
+                        </choice>
+                        <choice id="1.4.2">
+                            <action>leave</action>
+                        </choice>
+                    </subchoice>
+                </choice>
+                
+                <choice id="1.5">
+                    <action>leave the castle</action>
+                </choice>
+            </subchoice>
+        </choice>
+        
+        <choice id="2">
+            <action>talk to the shepherd</action>
+            <dialogue>
+                <character>Shepherd</character>
+                <text>Hi there, I require your assistance.</text>
+                <character>Player</character>
+                <text>Continue talking with the shepherd.</text>
+                <character>Shepherd</character>
+                <text>Since the war started, I can't leave the town so my sheep can’t graze. I would greatly appreciate it if you could buy some feed for the animals.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="2.1">
+                    <action>give him some wheat</action>
+                    <effect>
+                        <character>Shepherd</character>
+                        <text>Thanks for the help. Take this for your troubles.</text>
+                        <reward>
+                            <reputation>+1</reputation>
+                            <item>helmet</item>
+                            <attribute>+5 armor</attribute>
+                        </reward>
+                    </effect>
+                </choice>
+                <choice id="2.2">
+                    <action>come back later</action>
+                </choice>
+                <choice id="2.3">
+                    <action>leave</action>
+                </choice>
+            </subchoice>
+        </choice>
+        
+        <choice id="3">
+            <action>go to the bar</action>
+            <dialogue>
+                <character>Player</character>
+                <text>Barman, bring me some ale.</text>
+                <character>Barman</character>
+                <text>Coming right up.</text>
+                <character>Barman</character>
+                <text>Hi ……. Long time no see. I heard that King Arthur is organizing an alliance with King Edward the 3rd, is this true?</text>
+            </dialogue>
+            <subchoice>
+                <choice id="3.1">
+                    <action>say yes</action>
+                    <effect>
+                        <reputation>-2</reputation>
+                    </effect>
+                </choice>
+                <choice id="3.2">
+                    <action>say no</action>
+                    <effect>
+                        <reputation>-2</reputation>
+                    </effect>
+                </choice>
+                <choice id="3.3">
+                    <action>say you don’t know yet</action>
+                    <effect>
+                        <reputation>0</reputation>
+                    </effect>
+                </choice>
+            </subchoice>
+        </choice>
+        
+        <choice id="4">
+            <action>go to the market</action>
+            <subchoice>
+                <choice id="4.1">
+                    <action>visit the Apothecary (pharmacy)</action>
+                    <items>
+                        <item>
+                            <name>big bottle of herbal oils</name>
+                            <effect>+10 health</effect>
+                        </item>
+                        <item>
+                            <name>medium bottle of herbal oils</name>
+                            <effect>+5 health</effect>
+                        </item>
+                        <item>
+                            <name>small bottle of herbal oils</name>
+                            <effect>+2 health</effect>
+                        </item>
+                    </items>
+                </choice>
+                
+                <choice id="4.2">
+                    <action>visit the Blacksmith</action>
+                    <items>
+                        <item>
+                            <name>chainmail helmet</name>
+                            <effect>+6 armor</effect>
+                        </item>
+                        <item>
+                            <name>chainmail chest plate</name>
+                            <effect>+6 armor</effect>
+                        </item>
+                        <item>
+                            <name>chainmail leggings</name>
+                            <effect>+6 armor</effect>
+                        </item>
+                        <item>
+                            <name>chainmail boots</name>
+                            <effect>+6 armor</effect>
+                        </item>
+                        <item>
+                            <name>large sword</name>
+                            <effect>+10 damage</effect>
+                        </item>
+                        <item>
+                            <name>medium sword</name>
+                            <effect>+5 damage</effect>
+                        </item>
+                        <item>
+                            <name>spear</name>
+                            <effect>+4 damage</effect>
+                        </item>
+                    </items>
+                </choice>
+                
+                <choice id="4.3">
+                    <action>visit the food market</action>
+                    <items>
+                        <item>wheat</item>
+                        <item>apples</item>
+                        <item>carrots</item>
+                        <item>potatoes</item>
+                        <item>seeds</item>
+                    </items>
+                </choice>
+                
+                <choice id="4.4">
+                    <action>visit the witch’s shop</action>
+                    <items>
+                        <item>
+                            <name>strength potion</name>
+                            <effect>+5 strength</effect>
+                        </item>
+                        <item>
+                            <name>weakness potion</name>
+                            <effect>-5 strength</effect>
+                        </item>
+                        <item>
+                            <name>slowness potion</name>
+                            <effect>-3 speed</effect>
+                        </item>
+                    </items>
+                </choice>
+            </subchoice>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+    <location>Druids forest</location>
+    
+    <choices>
+        <choice id="1">
+            <action>go talk to the angry druid</action>
+            <dialogue>
+                <character>Angry druid</character>
+                <text>Hi there man, do you want to earn some great spells for your travels? All you need to do is steal a map from Brother Amergin, who resides in a small village east of the Pythias Mountains. I am giving you a sleeping poison so you can steal the map undetected. Once you get the map, come back here to give you your reward.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="1.1">
+                    <action>accept the offer</action>
+                </choice>
+                <choice id="1.2">
+                    <action>decline the offer</action>
+                </choice>
+            </subchoice>
+        </choice>
+        
+        <choice id="2">
+            <action>talk to the chief druid’s tent</action>
+            <dialogue>
+                <character>Chief Druid</character>
+                <text>Hello young fellow, I see you have traveled and faced lots of difficulties to come here. You need to know, my child, that your behavior will be of great importance of how your journey will end.</text>
+                <character>Player</character>
+                <text>What do you mean by that?</text>
+                <character>Chief Druid</character>
+                <text>HAHAHA you will see, but don’t worry, everything will come in time. All you need to know is to be careful of your decisions, they will determine the war.</text>
+            </dialogue>
+        </choice>
+        
+        <choice id="3">
+            <action>talk to the apprentice</action>
+            <dialogue>
+                <character>Young druid</character>
+                <text>Oh no, what am I going to do now!?!?!</text>
+                <character>Player</character>
+                <text>What happened kid?</text>
+                <character>Young druid</character>
+                <text>My magic owl ate the magic herbs for my assignment and I don’t have enough time to gather them again. My teacher will fail me. I will never become a true druid.</text>
+                <character>Player</character>
+                <text>Everything will be fine, I can help you.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="3.1">
+                    <action>give him the magic herbs</action>
+                </choice>
+                <choice id="3.2">
+                    <action>leave</action>
+                </choice>
+            </subchoice>
+        </choice>
+        
+        <choice id="4">
+            <action>leave the forest</action>
+            <directions>
+                <direction>
+                    <direction_name>NORTH</direction_name>
+                    <location>Pythia mountains</location>
+                </direction>
+                <direction>
+                    <direction_name>SOUTH</direction_name>
+                    <location>entry</location>
+                </direction>
+                <direction>
+                    <direction_name>EAST</direction_name>
+                    <location>Arthur’s castle</location>
+                </direction>
+            </directions>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+    <location>Pythia’s mountain</location>
+    
+    <choices>
+        <choice id="1">
+            <action>You just entered Pythia’s temple and a priest approached you.</action>
+            <dialogue>
+                <character>Priest</character>
+                <text>What do you want here? Don’t you see that this is a sacred place????</text>
+                <character>Player</character>
+                <text>King Arthur sent me to talk to her so she can give me her prophecy.</text>
+                <character>Priest</character>
+                <text>I don’t care who sent you here, what makes you think you are capable enough to talk to her?</text>
+            </dialogue>
+            <subchoice>
+                <choice id="1.1">
+                    <action>The fate of the war depends on prophecy</action>
+                </choice>
+                <choice id="1.2">
+                    <action>I faced too many obstacles to come here</action>
+                </choice>
+                <choice id="1.3">
+                    <action>And who are you to deny me access to her??</action>
+                </choice>
+            </subchoice>
+            <dialogue>
+                <character>Priest</character>
+                <text>Ok ok, you are lucky we don’t have a lot of traffic today. Go talk to her, she is in her chambers.</text>
+            </dialogue>
+        </choice>
+        
+        <choice id="2">
+            <action>You entered Pythia’s chambers.</action>
+            <dialogue>
+                <character>Pythia</character>
+                <text>Hi …… you are late, the war has almost started.</text>
+                <character>Player</character>
+                <text>I came as quick as I could.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="2.1">
+                    <reputation>Good</reputation>
+                    <prophecy>
+                        <text>Where shadows dance and whispers play,
+                            Two castles meet in the light of day.
+                            Bound by fate's unyielding tie,
+                            Their alliance sealed beneath the sky.
+                        </text>
+                    </prophecy>
+                </choice>
+                <choice id="2.2">
+                    <reputation>Bad</reputation>
+                    <prophecy>
+                        <text>In the labyrinth of fate, two castles dwell,
+                            Yet the whispers of the Oracle foretell
+                            Of shadows looming, of stars gone astray, 
+                            An alliance doomed, a price to pay.
+                        </text>
+                    </prophecy>
+                </choice>
+            </subchoice>
+            <dialogue>
+                <character>Player</character>
+                <text>Thank you so much for the help.</text>
+            </dialogue>
+        </choice>
+        
+        <choice id="3">
+            <action>leave Pythia’s mountains</action>
+            <directions>
+                <direction>
+                    <direction_name>EAST</direction_name>
+                    <location>village</location>
+                </direction>
+                <direction>
+                    <direction_name>SOUTH</direction_name>
+                    <location>forest druids</location>
+                </direction>
+            </directions>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+    <location>Village Alderwood</location>
+    
+    <choices>
+        <choice id="1">
+            <action>approach King Arthur’s carriage</action>
+            <dialogue>
+                <character>Player</character>
+                <text>Guard, let me talk to the king.</text>
+                <character>Guard</character>
+                <text>Sure, get in quick.</text>
+                <character>Arthur</character>
+                <text>Hi, my humble messenger, what do you want to tell me?</text>
+            </dialogue>
+            <subchoice>
+                <reputation>Good</reputation>
+                <dialogue>
+                    <character>Player</character>
+                    <text>Pythia prophesied that victory in the war would be assured if you joined forces with Eduard's army.</text>
+                    <character>Arthur</character>
+                    <text>Ok, go and ask Eduard for an alliance.</text>
+                </dialogue>
+                <reputation>Bad</reputation>
+                <dialogue>
+                    <character>Player</character>
+                    <text>Pythia warned that joining forces with Eduard's army would lead to defeat in the war.</text>
+                    <character>Arthur</character>
+                    <text>Ok, either way, go and ask Eduard for an alliance.</text>
+                </dialogue>
+            </subchoice>
+        </choice>
+        
+        <choice id="2">
+            <action>go to the alehouse</action>
+            <dialogue>
+                <text>You sat at the bar of the alehouse and ordered an ale. To your left, you see a drunk druid.</text>
+            </dialogue>
+            <subchoice>
+                <choice id="2.1">
+                    <action>talk to him</action>
+                    <dialogue>
+                        <character>Player</character>
+                        <text>Hi there, mister druid. Aren’t you guys supposed to know when to stop drinking?</text>
+                        <character>Brother Amergin</character>
+                        <text>Don’t call, hick, me that. The druids don’t deserve me, they kicked me out. These people think that they are better, hick, than everyone. Hick, my name is Brother Amergin, hick, actually just Amergin from now on.</text>
+                        <character>Player</character>
+                        <text>Oh, it’s their loss. I can see that you drink ohhhh I mean bring a lot of value to the druids.</text>
+                    </dialogue>
+                    <subchoice>
+                        <choice id="2.1.1">
+                            <action>Spike his drink</action>
+                            <effect>Item(map)</effect>
+                        </choice>
+                        <choice id="2.1.2">
+                            <action>Leave him in his sorrow</action>
+                        </choice>
+                    </subchoice>
+                </choice>
+                <choice id="2.2">
+                    <action>leave him alone</action>
+                </choice>
+            </subchoice>
+        </choice>
+        
+        <choice id="3">
+            <action>talk to Rose’s sister</action>
+            <dialogue>
+                <character>Player</character>
+                <text>Are you okay, my lady?</text>
+                <character>Lady</character>
+                <text>Yes, I am okay...ay. . …… is that you?</text>
+                <character>Player</character>
+                <text>Oh my goodness, Rose, my beloved sister. How are you? I haven't seen you in such a long time.</text>
+                <character>Rose</character>
+                <text>…… I am well, I live here now with my husband Eliot and my two kids, Melodias and Sofia.</text>
+                <character>Player</character>
+                <text>Ohh, I didn't know I had nephews. Could I ever meet them?</text>
+                <character>Rose</character>
+                <text>Yes, of course, come quick to my house.</text>
+                <text>They go into her house.</text>
+                <character>Player</character>
+                <text>Why are you so scared?</text>
+                <character>Rose</character>
+                <text>Everybody talks about the war that is going to happen and the soldiers take men in order to help. They took my husband as well.</text>
+                <character>Player</character>
+                <text>Is there anything I could do to help you?</text>
+                <character>Rose</character>
+                <text>No, I don't think you could. Only the king has such power.</text>
+                <character>Player</character>
+                <text>I can talk to him and try to free your husband.</text>
+                <character>Rose</character>
+                <text>THANK YOU SO MUCH.</text>
+                <character>Player</character>
+                <text>No need to worry, sister. By the way, where are the kids?</text>
+                <character>Rose</character>
+                <text>They must be at the playground, you will meet them another time. For how long are you staying?</text>
+                <character>Player</character>
+                <text>Not too long, I am on the job. Arthur summoned me to help with the communication for the war and I need to talk to him.</text>
+                <character>Rose</character>
+                <text>OH NO, not the war. I am going to have to bury two great men. I will not be able to handle it.</text>
+                <character>Player</character>
+                <text>Everything is going to be ok, Rose. Don’t worry, remember I am just the messenger.</text>
+                <character>Rose</character>
+                <text>At least take this, it’s my lucky charm. It didn’t help this time but it might help you.</text>
+                <character>Player</character>
+                <text>Thank you, Rose. I am going to keep it close.</text>
+            </dialogue>
+        </choice>
+        
+        <choice id="4">
+            <action>leave Village Alderwood</action>
+            <directions>
+                <direction>
+                    <direction_name>EAST</direction_name>
+                    <location>village</location>
+                </direction>
+                <direction>
+                    <direction_name>SOUTH</direction_name>
+                    <location>forest druids</location>
+                </direction>
+            </directions>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+    <location>Eduard’s castle</location>
+
+    <choices>
+        <choice id="1">
+            <action>go to King Eduard’s castle</action>
+            <dialogue>
+                <character>Player</character>
+                <text>Guard, I am delivering a message from King Arthur about the war. Let me pass.</text>
+                <character>Guard</character>
+                <text>Come in, we have been waiting for you.</text>
+                <text>You passed the guard and you are now entering King Eduard’s throne room.</text>
+                <character>Player</character>
+                <text>Greetings, Your Majesty. I have come to propose an alliance between our kingdoms.</text>
+                <character>Eduard</character>
+                <text>I must discuss your proposal with my advisors before making a decision.</text>
+            </dialogue>
+            <dialogue>
+                <text>21 minutes later...</text>
+            </dialogue>
+            <subchoice>
+                <reputation>Good</reputation>
+                <dialogue>
+                    <character>Eduard</character>
+                    <text>It would be an honor for my kingdom to join forces with King Arthur.</text>
+                </dialogue>
+                <reputation>Bad</reputation>
+                <dialogue>
+                    <character>Eduard</character>
+                    <text>My kingdom cannot afford to join forces with King Arthur at this time.</text>
+                </dialogue>
+            </subchoice>
+            <dialogue>
+                <character>Eduard</character>
+                <text>I have already sent my own messenger to inform your king that tomorrow we will attack the enemy territory.</text>
+                <character>Player</character>
+                <text>Thank you for telling me. I must go now.</text>
+            </dialogue>
+        </choice>
+
+        <choice id="2">
+            <action>explore the town</action>
+            <dialogue>
+                <text>You began taking a stroll and you see a woman getting robbed by two armed men.</text>
+                <character>Unknown woman</character>
+                <text>HELP HELP THEY ARE ROBBING ME</text>
+            </dialogue>
+            <subchoice>
+                <choice id="2.1">
+                    <action>help her</action>
+                    <dialogue>
+                        <character>Player</character>
+                        <text>Leave the poor woman alone!</text>
+                        <character>Unknown woman</character>
+                        <text>Thanks for saving me from those people. Take this for helping me.</text>
+                    </dialogue>
+                    <effect>rep+1.5</effect>
+                </choice>
+                <choice id="2.2">
+                    <action>don’t help her</action>
+                    <effect>rep-1.5</effect>
+                </choice>
+            </subchoice>
+        </choice>
+
+        <choice id="3">
+            <action>leave castle</action>
+            <directions>
+                <direction>
+                    <direction_name>SOUTH</direction_name>
+                    <location>battlefront</location>
+                    <note>(end of the story)</note>
+                </direction>
+            </directions>
+        </choice>
+    </choices>
+</scenario>
+<scenario>
+    <location>Battlefront</location>
+
+    <choices>
+        <choice id="1">
+            <reputation>Good</reputation>
+            <action>After joining forces, the two castles emerged victorious against their adversary.</action>
+            <ending>End story</ending>
+        </choice>
+
+        <choice id="2">
+            <reputation>Bad</reputation>
+            <action>Without joining forces, the two castles were defeated against their opponent.</action>
+            <ending>End story</ending>
+        </choice>
+    </choices>
+</scenario>
+</game>
