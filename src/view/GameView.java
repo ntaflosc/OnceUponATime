@@ -5,11 +5,12 @@ import model.Dialogue;
 import model.Scenario;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class GameView {
     public void displayScenario(Scenario scenario) {
         //Placeholder for xml player name
-        String username = "John Doe";
+        String username = getUsername();
         String messageTemplate = scenario.getStory();
         String message = messageTemplate.replace("{username}", username);
 
@@ -51,5 +52,18 @@ public class GameView {
                 displayChoices(choice.getSubChoices());
             }
         }
+    }
+
+    public static String getUsername(){
+        String username;
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter their name
+        System.out.print("Enter your name: ");
+
+        // Read the name entered by the user as a string
+        username = scanner.nextLine();
+        scanner.close();
+        return username;
     }
 }
