@@ -18,6 +18,10 @@ public class Dialogue {
         this.character = character;
     }
 
+    public Dialogue(String text) {
+        this.text = text;
+    }
+
     public void setText(String text) {
         this.text = text;
     }

@@ -6,6 +6,7 @@ public class Effect {
     private List<String> items;
     private double reputation;
     private int checkpoint;
+    private String description;
 
     // Getters and setters
     public List<String> getItems() {
@@ -30,5 +31,17 @@ public class Effect {
 
     public void setCheckpoint(int checkpoint) {
         this.checkpoint = checkpoint;
+    }
+
+    public Effect(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

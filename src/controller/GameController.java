@@ -1,24 +1,28 @@
 package controller;
 
-import loader.XMLLoader;
 import model.*;
 import model.Scenario;
 import view.GameView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class GameController {
     private List<Scenario> scenarios;
+    private Scenario currentScenario;
     private GameView view;
     private Scanner scanner;
-    private Scenario currentScenario;
 
-    public GameController(String filePath) {
-        XMLLoader loader = new XMLLoader(filePath);
-        scenarios = loader.getScenarios();
-        view = new GameView();
-        scanner = new Scanner(System.in);
+    public GameController(List<Scenario> scenarios, GameView view) {
+        this.scenarios = scenarios;
+        this.view = view;
+        this.scanner = new Scanner(System.in);
+        setupScenarios();
+    }
+
+    private void setupScenarios() {
+        // Initial setup for scenarios if needed
     }
 
     public void startGame() {
@@ -69,11 +73,11 @@ public class GameController {
         return null;
     }
 
-    private void applyChoiceEffects(Choice choice) {
-        // Apply the effects of the choice, e.g., update player state (items, reputation, etc.)
-        for (Effect effect : choice.getEffects()) {
-            // Example: print out the effects (you can update player's state here)
-            System.out.println("Effect: Items = " + effect.getItems() + ", Reputation = " + effect.getReputation());
+    private void applyChoiceEffects(Choice chosenChoice) {
+        // Apply the effects of the chosen choice, if any
+        for (Effect effect : chosenChoice.getEffects()) {
+            // Apply each effect (the actual implementation would depend on the game's requirements)
+            System.out.println("Effect: " + effect.getDescription());
         }
     }
 
@@ -83,6 +87,6 @@ public class GameController {
                 return scenario;
             }
         }
-        return null; // or handle as a game over or invalid state
+        return null;
     }
 }
